@@ -1,0 +1,20 @@
+[project]
+name = "stacksguard-contracts"
+description = "Token security and reputation system for Stacks blockchain"
+authors = []
+telemetry = true
+cache_dir = "./.cache"
+
+[contracts.token-reputation-registry]
+path = "contracts/token-reputation-registry.clar"
+clarity_version = 2
+epoch = "3.0"
+
+[contracts.protected-vault-demo]
+path = "contracts/protected-vault-demo.clar"
+clarity_version = 2
+epoch = "3.0"
+
+[repl.analysis]
+passes = ["check_checker"]
+check_checker = { trusted_sender = false, trusted_caller = false, callee_filter = false }
