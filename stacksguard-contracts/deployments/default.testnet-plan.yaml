@@ -1,0 +1,25 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: token-reputation-registry
+            expected-sender: ST1RCJ0MRXGJG8CQF94Z3TKCERMEHQNP3XQT2WEZP
+            cost: 3132992
+            path: "contracts\\token-reputation-registry.clar"
+            anchor-block-only: true
+            clarity-version: 2
+        - contract-publish:
+            contract-name: protected-vault-demo
+            expected-sender: ST1RCJ0MRXGJG8CQF94Z3TKCERMEHQNP3XQT2WEZP
+            cost: 3130734
+            path: "contracts\\pyrotected-vault-demo.clar"
+            anchor-block-only: true
+            clarity-version: 2
+      epoch: "3.0"
