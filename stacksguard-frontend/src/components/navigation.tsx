@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Shield, Activity, Search, BookOpen } from 'lucide-react';
+import { Shield, Activity, Search, BookOpen, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useWallet } from '@/lib/wallet-context';
 
 export function Navigation() {
   const pathname = usePathname();
+  const { isConnected, connectWallet, disconnectWallet, address } = useWallet();
 
   const links = [
     { href: '/', label: 'Dashboard', icon: Activity },
@@ -15,6 +17,15 @@ export function Navigation() {
     { href: '/alex-hack', label: 'ALEX Hack', icon: BookOpen },
     { href: '/demo', label: 'Demo', icon: Shield },
   ];
+
+  const truncateAddress = (addr: string) => {
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  };
+
+  const handleConnect = () => {
+    console.log('🖱️ Connect button clicked in Navigation');
+    connectWallet();
+  };
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-gray-200/50 shadow-sm">
@@ -55,9 +66,28 @@ export function Navigation() {
           </div>
 
           {/* Connect Wallet Button */}
-          <Button className="hidden sm:flex">
-            Connect Wallet
-          </Button>
+          {isConnected ? (
+            <div className="flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-2 px-3 py-2 bg-green-50 rounded-lg border border-green-200">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-sm font-medium text-green-700">
+                  {truncateAddress(address || '')}
+                </span>
+              </div>
+              <Button variant="outline" onClick={disconnectWallet} size="sm">
+                Disconnect
+              </Button>
+            </div>
+          ) : (
+            <Button 
+              onClick={handleConnect} 
+              className="gap-2"
+              type="button"
+            >
+              <Wallet className="w-4 h-4" />
+              Connect Wallet
+            </Button>
+          )}
         </div>
       </div>
     </nav>

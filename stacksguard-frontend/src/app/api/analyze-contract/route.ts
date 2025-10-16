@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    // Use gemini-1.5-flash instead of gemini-pro
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const prompt = `You are a Clarity smart contract security expert specializing in Stacks blockchain vulnerabilities.
 
@@ -73,7 +74,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
   } catch (error) {
     console.error('Analysis error:', error);
     return NextResponse.json(
-      { error: 'Failed to analyze contract' },
+      { error: 'Failed to analyze contract. Please check your API key and try again.' },
       { status: 500 }
     );
   }
